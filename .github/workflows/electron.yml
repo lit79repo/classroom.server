@@ -35,7 +35,9 @@ jobs:
           path: dist
 
       - name: Pack Artifacts Before Release
-        run: zip -r artifact.zip dist/
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r ./artifact.zip ./dist
 
       - name: Create Release
         id: create_release
