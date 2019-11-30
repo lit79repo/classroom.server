@@ -14,32 +14,42 @@
     <h2 class="status"><span>☑️</302span> Загрузка...</h2>
     <h3 class="room">Кабінет: </h3>
     <h6 class="copyright">Copyright (c) 2019 Misha Marinenko</h6>
+    <h6 class="copyright_help">Some Help and Tests by: Arseiy Galuskin, Dmitry Borisenko</h6>
+    <pre>
+        # Nearby Machines
+    </pre>
 </body>
 <script>
-    let updateInfo = async () => {
-        const Status = await fetch("http://localhost:7979/status");
-        const res = await Status.json();
-        const net = await fetch("http://localhost:7979/net");
-        const NetRes = await net.json();
-        const status = document.querySelector(".status");
-        const room = document.querySelector(".room");
-        console.log(Status, res);
-        if (res.started == true) {
-            status.innerHTML = "<span>✅</span> Під'єднано До Мережі Комп'ютерів Ліцею.";
-        } else {
-            status.innerHTML = `
+let updateInfo = async () => {
+    const Status = await fetch("http://localhost:7979/status");
+    const res = await Status.json();
+    const net = await fetch("http://localhost:7979/net");
+    const NetRes = await net.json();
+    const machines = await fetch("http://localhost:7979/machines");
+    const machinesRes = await machines.json();
+    const status = document.querySelector(".status");
+    const room = document.querySelector(".room");
+    const machinesEl = document.querySelector("pre");
+    console.log(Status, res);
+    if (res.started == true) {
+        status.innerHTML = "<span>✅</span> Під'єднано До Мережі Комп'ютерів Ліцею.";
+    } else {
+        status.innerHTML = `
                 <span>❌</span> Не під'єднано До Мережі Комп'ютерів Ліцею.
                 <br>
                 <h6>
                  Це Програмне Забеспечення працює завдяки P2P для роботи потрібно декілька (1-2) комп'ютеів.
                 </h6>
             `;
-        }
-        room.innerHTML = "🚪Кабінет: " + NetRes.name;
-
-    };
-    updateInfo();
-    setInterval(updateInfo, 10000);
+    }
+    room.innerHTML = "🚪Кабінет: " + NetRes.name;
+    machinesEl.innerHTML= "";
+    machinesRes.forEach(machine => {
+        machinesEl.innerHTML = machinesEl.innerHTML+ "\n" + machine.hostname;
+    });
+};
+updateInfo();
+setInterval(updateInfo, 10000);
 </script>
 
 </html>

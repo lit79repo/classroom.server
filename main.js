@@ -79,4 +79,8 @@ api.get("/status", (req, res) => {
   res.json({ started: classroom.net.started });
 });
 
+mb.on("after-create-window", ()=>{
+  // mb.window.openDevTools()
+})
+
 api.listen(7979);
