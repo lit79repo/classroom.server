@@ -43,7 +43,7 @@ mb.on('ready', () => {
 });
 
 api.get("/lock", (req, res) => {
-  lockWindow.setMenuBarVisibility(false);
+  // lockWindow.setMenuBarVisibility(false);
   lockWindow.setFullScreen(true);
   lockWindow.setKiosk(true);
   lockWindow.setAlwaysOnTop(true);
@@ -55,7 +55,7 @@ api.get("/lock", (req, res) => {
 })
 setInterval(() => {
   if (locked === true) {
-    lockWindow.setMenuBarVisibility(false);
+    // lockWindow.setMenuBarVisibility(false);
     lockWindow.setFullScreen(true);
     lockWindow.setAlwaysOnTop(true);
     lockWindow.setKiosk(true);
