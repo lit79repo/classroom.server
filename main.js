@@ -61,14 +61,14 @@ setInterval(() => {
     lockWindow.setKiosk(true);
     lockWindow.show();
   } else {
-    lockWindow.setMenuBarVisibility(true);
+    // lockWindow.setMenuBarVisibility(true);
     lockWindow.setKiosk(false);
     lockWindow.setAlwaysOnTop(false);
     lockWindow.hide();
   }
 }, 250);
 api.get("/unlock", (req, res) => {
-  lockWindow.setMenuBarVisibility(true);
+  // lockWindow.setMenuBarVisibility(true);
   lockWindow.setKiosk(false);
   lockWindow.setFullScreen(false);
   lockWindow.hide();
