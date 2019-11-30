@@ -5,7 +5,8 @@ const { join } = require('path');
 const { userInfo } = require('os');
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-
+let lockWindow;
+let locked = false;
 const adapter = new FileSync(userInfo().homedir + "/.cfg.json");
 const db = low(adapter);
 
@@ -20,49 +21,62 @@ api.get("/machines", (req, res) => {
   res.json(classroom.core.machines);
 })
 
+api.get("/net", (req, res) => {
+  res.json(classroom.net);
+})
+
+const mb = menubar({
+  icon: join(__dirname, "menu_icon.png"),
+  browserWindow: {
+    resizable: false,
+    movable: false
+  },
+  showDockIcon: false
+});
+
 app.on("ready", () => {
-  let locked = false;
-  let lockWindow = new BrowserWindow({ skipTaskbar: true, frame: true, fullscreen: true, minimizable: false, darkTheme: true, draggable: false, autoHideMenuBar: true, resizable: false, closable: false, vibrancy: "dark", show: false, transparent: true, alwaysOnTop: true, title: ":(", titleBarStyle: "hidden" })
+  lockWindow = new BrowserWindow({ skipTaskbar: true, frame: true, fullscreen: false, minimizable: false, draggable: false, autoHideMenuBar: true, resizable: false, closable: false, show: false, transparent: true, alwaysOnTop: false, title: ":(", titleBarStyle: "hidden" })
+});
 
+mb.on('ready', () => {
+  console.info("Menubar Ready");
+});
 
-  api.get("/lock", (req, res) => {
+api.get("/lock", (req, res) => {
+  lockWindow.setMenuBarVisibility(false);
+  lockWindow.setFullScreen(true);
+  lockWindow.setKiosk(true);
+  lockWindow.setAlwaysOnTop(true);
+  lockWindow.setFullScreen(true);
+  lockWindow.show();
+  lockWindow.loadURL(join("file://", __dirname, "index.html"));
+  locked = true;
+  res.send();
+})
+setInterval(() => {
+  if (locked === true) {
     lockWindow.setMenuBarVisibility(false);
     lockWindow.setFullScreen(true);
+    lockWindow.setAlwaysOnTop(true);
     lockWindow.setKiosk(true);
     lockWindow.show();
-    lockWindow.loadURL(join("file://", __dirname, "index.html"));
-    locked = true;
-    res.send();
-  })
-  setInterval(() => {
-    if (locked) {
-      lockWindow.setMenuBarVisibility(false);
-      lockWindow.setFullScreen(true);
-      lockWindow.setKiosk(true);
-      lockWindow.show();
-      lockWindow.loadURL(join("file://", __dirname, "index.html"));
-    }
-  }, 250);
-  api.get("/unlock", (req, res) => {
+  } else {
     lockWindow.setMenuBarVisibility(true);
     lockWindow.setKiosk(false);
+    lockWindow.setAlwaysOnTop(false);
     lockWindow.hide();
-    locked = false;
-    res.send();
-  })
-  api.get("/status", (req, res) => {
-    res.json(classroom.net.started);
-  })
-  const mb = menubar({
-    icon: join(__dirname, "menu_icon.png"),
-    browserWindow: {
-      resizable: false,
-      movable: false
-    },
-    showDockIcon: false
-  });
-
-  mb.on('ready', () => {
-    api.listen(7979);
-  });
+  }
+}, 250);
+api.get("/unlock", (req, res) => {
+  lockWindow.setMenuBarVisibility(true);
+  lockWindow.setKiosk(false);
+  lockWindow.setFullScreen(false);
+  lockWindow.hide();
+  locked = false;
+  res.send();
+})
+api.get("/status", (req, res) => {
+  res.json({ started: classroom.net.started });
 });
+
+api.listen(7979);

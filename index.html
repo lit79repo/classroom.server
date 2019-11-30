@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,38 @@
     <link rel="stylesheet" href="index.css">
     <title>79</title>
 </head>
+
 <body>
-    <h1 class="emodjis">🏫🖥️🖇️</h1>
-    <h2 class="status"><span>✅</span> Під'єднано До Мережі Комп'ютерів Ліцею.</h2>
-    <h3 class="room">Кабінет: 302</h3>
+    <h1 class="emodjis">🏫 🖥️ 🖇️</h1>
+    <h2 class="status"><span>☑️</302span> Загрузка...</h2>
+    <h3 class="room">Кабінет: </h3>
     <h6 class="copyright">Copyright (c) 2019 Misha Marinenko</h6>
 </body>
+<script>
+    let updateInfo = async () => {
+        const Status = await fetch("http://localhost:7979/status");
+        const res = await Status.json();
+        const net = await fetch("http://localhost:7979/net");
+        const NetRes = await net.json();
+        const status = document.querySelector(".status");
+        const room = document.querySelector(".room");
+        console.log(Status, res);
+        if (res.started == true) {
+            status.innerHTML = "<span>✅</span> Під'єднано До Мережі Комп'ютерів Ліцею.";
+        } else {
+            status.innerHTML = `
+                <span>❌</span> Не під'єднано До Мережі Комп'ютерів Ліцею.
+                <br>
+                <h6>
+                 Це Програмне Забеспечення працює завдяки P2P для роботи потрібно декілька (1-2) комп'ютеів.
+                </h6>
+            `;
+        }
+        room.innerHTML = "🚪Кабінет: " + NetRes.name;
+
+    };
+    updateInfo();
+    setInterval(updateInfo, 10000);
+</script>
+
 </html>

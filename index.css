@@ -2,19 +2,23 @@ html, body{
     background: black;
     color: white;
     overflow: hidden;
+    z-index: 0;
 }
 .emodjis{
     padding: 15px;
     margin: 0 auto;
+    z-index: 1;
 }
 *{
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 800;
     text-align: center;
     padding: 15px;
+    z-index: 1;
 }
 .status{
     text-align: left;
+    z-index: 1;
 }
 .status span {
     text-align: left;
@@ -24,7 +28,11 @@ html, body{
 } 
 .room{
     padding-bottom: 5px;
+    z-index: 1;
 }
 .copyright{
-    padding-bottom: 0;
+    position: relative;
+    bottom: 0;
+    text-align: center;
+    z-index: 100;
 }
