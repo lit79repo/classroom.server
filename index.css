@@ -1,0 +1,30 @@
+html, body{
+    background: black;
+    color: white;
+    overflow: hidden;
+}
+.emodjis{
+    padding: 15px;
+    margin: 0 auto;
+}
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    text-align: center;
+    padding: 15px;
+}
+.status{
+    text-align: left;
+}
+.status span {
+    text-align: left;
+}
+.status span:first-of-type {
+    text-align: right;
+} 
+.room{
+    padding-bottom: 5px;
+}
+.copyright{
+    padding-bottom: 0;
+}

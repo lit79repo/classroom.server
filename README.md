@@ -1,0 +1,3 @@
+# School (Liceyum) #79 Clssroom Control Software. (Windows ONLY!)
+## Work In Process...
+> Still lots of work right now.
