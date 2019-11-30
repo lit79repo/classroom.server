@@ -35,7 +35,7 @@ jobs:
           path: dist
         run: zip -r artifact.zip dist/
 
- - name: Create Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
