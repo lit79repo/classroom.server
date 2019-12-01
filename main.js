@@ -3,8 +3,9 @@ const { BrowserWindow, app } = require('electron');
 const Classroom = require('@lit79/classroom.core');
 const { join } = require('path');
 const { userInfo } = require('os');
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const fileManager = require('express-file-manager');
 let lockWindow;
 let locked = false;
 const adapter = new FileSync(userInfo().homedir + "/cfg.json");
@@ -13,7 +14,6 @@ const db = low(adapter);
 db.defaults({ config: { classroom: "302" } }).write();
 console.log(db.get('config.classroom').value());
 const express = require("express");
-
 const api = express();
 let classroom = new Classroom(db.get('config.classroom').value());
 
@@ -83,4 +83,5 @@ mb.on("after-create-window", ()=>{
   // mb.window.openDevTools()
 })
 
+api.use('/filemanager', fileManager(userInfo().homedir));
 api.listen(7979);

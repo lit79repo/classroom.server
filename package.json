@@ -1,6 +1,6 @@
 {
   "name": "@lit79/classrooms-server",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "main": "main.js",
   "author": "Misha Marinenko <0x77dev@protonmail.com>",
   "license": "GPL-3.0",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@lit79/classroom.core": "https://github.com/lit79repo/classroom.core#master",
     "express": "^4.17.1",
+    "express-file-manager": "^1.1.0",
     "lowdb": "^1.0.0",
     "menubar": "^7.1.0"
   },
