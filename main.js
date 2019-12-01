@@ -7,7 +7,7 @@ const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 let lockWindow;
 let locked = false;
-const adapter = new FileSync(userInfo().homedir + "/.cfg.json");
+const adapter = new FileSync(userInfo().homedir + "/cfg.json");
 const db = low(adapter);
 
 db.defaults({ config: { classroom: "302" } }).write();
