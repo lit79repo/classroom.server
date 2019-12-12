@@ -1,9 +1,9 @@
- /**
- * @copyright Copyright (C) 2019 Misha Marinenko
- * @description Student Part for Classroom Management Software.
- * @name @lit79/classroom.server
- * @package @lit79/classroom.server
- */
+/**
+* @copyright Copyright (C) 2019 Misha Marinenko
+* @description Student Part for Classroom Management Software.
+* @name @lit79/classroom.server
+* @package @lit79/classroom.server
+*/
 
 const { menubar } = require('menubar');
 const { BrowserWindow, app } = require('electron');
@@ -86,7 +86,7 @@ api.get("/status", (req, res) => {
   res.json({ started: classroom.net.started });
 });
 
-mb.on("after-create-window", ()=>{
+mb.on("after-create-window", () => {
   // mb.window.openDevTools()
 })
 
