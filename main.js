@@ -6,7 +6,8 @@
 */
 
 const { menubar } = require('menubar');
-const { BrowserWindow, app } = require('electron');
+const { BrowserWindow, app, ipcRenderer, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const Classroom = require('@lit79/classroom.core');
 const { join } = require('path');
 const { userInfo } = require('os');
@@ -36,13 +37,29 @@ const mb = menubar({
   icon: join(__dirname, "menu_icon.png"),
   browserWindow: {
     resizable: false,
-    movable: false
+    movable: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   },
   showDockIcon: false
 });
 
 app.on("ready", () => {
   lockWindow = new BrowserWindow({ skipTaskbar: true, frame: true, fullscreen: false, minimizable: false, draggable: false, autoHideMenuBar: true, resizable: false, closable: false, show: false, transparent: true, alwaysOnTop: false, title: ":(", titleBarStyle: "hidden" })
+  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.on('update-available', () => {
+    mainWindow.webContents.send('update_available');
+  });
+  autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update_downloaded');
+  });
+  ipcMain.on('restart_app', () => {
+    autoUpdater.quitAndInstall();
+  });
+  ipcMain.on('app_version', (event) => {
+    event.sender.send('app_version', { version: app.getVersion() });
+  });
 });
 
 mb.on('ready', () => {
