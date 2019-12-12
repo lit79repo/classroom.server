@@ -1,3 +1,10 @@
+ /**
+ * @copyright Copyright (C) 2019 Misha Marinenko
+ * @description Student Part for Classroom Management Software.
+ * @name @lit79/classroom.server
+ * @package @lit79/classroom.server
+ */
+
 const { menubar } = require('menubar');
 const { BrowserWindow, app } = require('electron');
 const Classroom = require('@lit79/classroom.core');
