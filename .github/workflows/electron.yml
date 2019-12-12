@@ -8,11 +8,7 @@ on:
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [windows-2019]
+    runs-on: windows-2019
 
     steps:
       - name: Check out Git repository
@@ -22,11 +18,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
+      - run: yarn install
+      - run: yarn deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with: 
-          github_token: ${{ secrets.github_token }}
+      #- name: Build/release Electron app
+      #  uses: samuelmeuli/action-electron-builder@v1
+      #  with: 
+      #    github_token: ${{ secrets.github_token }}
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
