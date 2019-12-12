@@ -1,6 +1,6 @@
 {
   "name": "@lit79/classrooms.server",
-  "version": "1.0.0",
+  "version": "3.0.1",
   "main": "main.js",
   "author": "Misha Marinenko <0x77dev@protonmail.com>",
   "license": "GPL-3.0",
