@@ -18,16 +18,22 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: yarn install
-      - run: yarn deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #- run: yarn install
+      #- run: yarn deploy
+      #  env:
+      #    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       #- name: Build/release Electron app
       #  uses: samuelmeuli/action-electron-builder@v1
       #  with: 
       #    github_token: ${{ secrets.github_token }}
         
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
