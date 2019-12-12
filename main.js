@@ -11,7 +11,7 @@ let locked = false;
 const adapter = new FileSync(userInfo().homedir + "/cfg.json");
 const db = low(adapter);
 
-db.defaults({ config: { classroom: "302" } }).write();
+db.defaults({ config: { classroom: "206" } }).write();
 console.log(db.get('config.classroom').value());
 const express = require("express");
 const api = express();
