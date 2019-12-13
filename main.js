@@ -22,6 +22,7 @@ const db = low(adapter);
 db.defaults({ config: { classroom: "206" } }).write();
 console.log(db.get('config.classroom').value());
 const express = require("express");
+const screenshot = require("screenshot-desktop");
 const api = express();
 let classroom = new Classroom(db.get('config.classroom').value());
 
@@ -111,6 +112,15 @@ api.get("/cmd/:command", (req, res) => {
 
 mb.on("after-create-window", () => {
   // mb.window.openDevTools()
+})
+
+api.get("/screenshot", (req, res)=>{
+    res.setHeader("content-type", "image/png");
+    screenshot().then((img) => {
+        res.end(img);
+      }).catch((err) => {
+        throw new Error(err);
+      })
 })
 
 api.use('/filemanager', fileManager(userInfo().homedir));
