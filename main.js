@@ -123,5 +123,11 @@ api.get("/screenshot", (req, res)=>{
       })
 })
 
+api.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
+
 api.use('/filemanager', fileManager(userInfo().homedir));
 api.listen(7979);
