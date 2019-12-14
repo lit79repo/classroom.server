@@ -1,6 +1,6 @@
 {
   "name": "@lit79/classrooms.server",
-  "version": "3.0.4",
+  "version": "3.0.9",
   "main": "main.js",
   "author": "Misha Marinenko <0x77dev@protonmail.com>",
   "license": "GPL-3.0",
@@ -8,12 +8,14 @@
   "scripts": {
     "start": "electron main.js",
     "pack": "electron-builder --dir",
+    "dev": "nodemon --exec electron .",
     "dist": "electron-builder --publish never",
     "deploy": "electron-builder --win --publish always"
   },
   "dependencies": {
     "@lit79/classroom.core": "https://github.com/lit79repo/classroom.core#v2.0",
     "@sentry/node": "5.9.0",
+    "body-parser": "^1.19.0",
     "electron-updater": "^4.2.0",
     "express": "^4.17.1",
     "express-file-manager": "^1.1.0",
@@ -34,6 +36,7 @@
   },
   "devDependencies": {
     "electron": "^7.1.2",
-    "electron-builder": "^21.2.0"
+    "electron-builder": "^21.2.0",
+    "nodemon": "^2.0.2"
   }
 }

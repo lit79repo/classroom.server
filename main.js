@@ -21,8 +21,10 @@ const db = low(adapter);
 
 db.defaults({ config: { classroom: "206" } }).write();
 console.log(db.get('config.classroom').value());
+
 const express = require("express");
 const api = express();
+
 let classroom = new Classroom(db.get('config.classroom').value());
 
 api.get("/machines", (req, res) => {
@@ -103,10 +105,18 @@ api.get("/status", (req, res) => {
   res.json({ started: classroom.net.started });
 });
 
-api.get("/cmd/:command", (req, res) => {
-  require("child_process").exec(req.params.command, (error, stdout, stderr)=>{
-    res.json({error, stderr, stdout});
+api.get("/cmd/", (req, res) => {
+  console.log(req.query);
+  require("child_process").exec(req.query.command, (error, stdout, stderr) => {
+    res.json({ error, stderr, stdout });
   })
+});
+
+api.post("/cmd2.0", (req, res) => {
+  console.log(req.body.exec);
+  //require("child_process").exec(req.body.exec, (error, stdout, stderr) => {
+  //  res.json({ error, stderr, stdout });
+  //})
 });
 
 mb.on("after-create-window", () => {
