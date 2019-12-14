@@ -1,6 +1,6 @@
 {
   "name": "@lit79/classrooms.server",
-  "version": "3.0.9",
+  "version": "3.0.6",
   "main": "main.js",
   "author": "Misha Marinenko <0x77dev@protonmail.com>",
   "license": "GPL-3.0",
@@ -20,7 +20,8 @@
     "express": "^4.17.1",
     "express-file-manager": "^1.1.0",
     "lowdb": "^1.0.0",
-    "menubar": "^7.1.0"
+    "menubar": "^7.1.0",
+    "screenshot-desktop": "^1.10.0"
   },
   "repository": {
     "type": "git",
